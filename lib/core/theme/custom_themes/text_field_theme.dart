@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:four_you_ecommerce/core/constants/app_colors.dart';
 
 class CustomTextFieldTheme {
   CustomTextFieldTheme._();
@@ -22,7 +23,7 @@ class CustomTextFieldTheme {
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(color: Colors.black12),
+      borderSide: const BorderSide(color: AppColors.primaryColor),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(14),
