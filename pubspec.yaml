@@ -10,16 +10,14 @@ environment:
 
 #-----------------Packages----------------#
 dependencies:
+  cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
-  # Icons
-  cupertino_icons: ^1.0.8
   flutter_launcher_icons: ^0.14.3
-  # Splash
   flutter_native_splash: ^2.4.3
-  # Intro
+  go_router: ^14.8.0
   introduction_screen: ^3.1.17
-  # SVG
+  shared_preferences: ^2.5.2
   svg_flutter: ^0.0.1
 
 dev_dependencies:

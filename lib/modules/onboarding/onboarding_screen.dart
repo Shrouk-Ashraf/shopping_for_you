@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:four_you_ecommerce/core/constants/app_colors.dart';
+import 'package:four_you_ecommerce/core/routing/routes.dart';
+import 'package:go_router/go_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -44,36 +47,45 @@ class OnboardingScreen extends StatelessWidget {
           dotsDecorator: DotsDecorator(
             size: const Size.square(10.0),
             activeSize: const Size(40.0, 10.0),
-            activeColor: AppColors.black,
-            color: Colors.black26,
+            activeColor: Theme.of(context).brightness == Brightness.light
+                ? AppColors.black
+                : Colors.white,
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.black26
+                : Colors.white60,
             spacing: const EdgeInsets.symmetric(horizontal: 3.0),
             activeShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25.0)),
           ),
-          showNextButton: true,
+          showNextButton: false,
           showDoneButton: true,
           showSkipButton: true,
-          overrideDone: const Text(
-            "Done",
-            style:
-                TextStyle(color: AppColors.black, fontWeight: FontWeight.w500),
-            textAlign: TextAlign.end,
+          overrideDone: InkWell(
+            onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setBool('isFirstTime', false);
+              debugPrint("done with ${prefs.getBool('isFirstTime')}");
+              context.goNamed(Routes.login);
+            },
+            child: const Text(
+              "Done",
+              style: TextStyle(fontWeight: FontWeight.w500),
+              textAlign: TextAlign.end,
+            ),
           ),
-          overrideSkip: const Text(
-            "Skip",
-            style:
-                TextStyle(color: AppColors.black, fontWeight: FontWeight.w500),
-            textAlign: TextAlign.start,
+          overrideSkip: InkWell(
+            onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setBool('isFirstTime', false);
+              debugPrint("done with ${prefs.getBool('isFirstTime')}");
+              context.goNamed(Routes.login);
+            },
+            child: const Text(
+              "Skip",
+              style: TextStyle(fontWeight: FontWeight.w500),
+              textAlign: TextAlign.start,
+            ),
           ),
-          overrideNext: const Text(
-            "Next",
-            style:
-                TextStyle(color: AppColors.black, fontWeight: FontWeight.w500),
-            textAlign: TextAlign.end,
-          ),
-          onDone: () {
-            // On button pressed
-          },
         ),
       ),
     );

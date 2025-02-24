@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:four_you_ecommerce/core/routing/router.dart';
 import 'package:four_you_ecommerce/core/theme/app_theme.dart';
 import 'package:four_you_ecommerce/modules/onboarding/onboarding_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  runApp(MyApp(
+    isFirstTime: isFirstTime,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isFirstTime;
+  const MyApp({super.key, required this.isFirstTime});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Shopping For You',
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home: const OnboardingScreen(),
+      routerConfig: AppRouter(isFirstTime).router,
     );
   }
 }
