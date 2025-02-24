@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:four_you_ecommerce/core/di/di.dart';
 import 'package:four_you_ecommerce/core/routing/router.dart';
 import 'package:four_you_ecommerce/core/theme/app_theme.dart';
-import 'package:four_you_ecommerce/modules/onboarding/onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  await init();
   runApp(MyApp(
     isFirstTime: isFirstTime,
   ));
