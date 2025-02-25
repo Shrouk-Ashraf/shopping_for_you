@@ -1,6 +1,7 @@
 import 'package:four_you_ecommerce/core/network/dio/dio_helper.dart';
 import 'package:four_you_ecommerce/core/network/repository.dart';
-import 'package:four_you_ecommerce/modules/authentication/cubit/login_cubit.dart';
+import 'package:four_you_ecommerce/modules/authentication/cubit/auth_cubit.dart';
+import 'package:four_you_ecommerce/modules/home/cubit/home_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 
@@ -20,9 +21,12 @@ Future init() async {
       ),
     );
   }
-  di.registerLazySingleton<LoginCubit>(
-    () => LoginCubit(
+  di.registerLazySingleton<AuthCubit>(
+    () => AuthCubit(
       di<Repository>(),
     ),
+  );
+  di.registerLazySingleton<HomeCubit>(
+    () => HomeCubit(),
   );
 }

@@ -26,7 +26,7 @@ class EmailTextField extends StatelessWidget {
       ),
       textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
-        prefixIcon: Icon(
+        prefixIcon: const Icon(
           Icons.email_outlined,
           size: 24,
         ),

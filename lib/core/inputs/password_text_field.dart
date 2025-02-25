@@ -78,10 +78,4 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       ),
     );
   }
-
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
-  }
 }

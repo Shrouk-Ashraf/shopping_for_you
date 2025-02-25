@@ -17,7 +17,10 @@ class DioHelper {
             error: true,
           ),
       ])
-      ..options.baseUrl = Constants.baseUrl;
+      ..options.baseUrl = Constants.baseUrl
+      ..options.headers.addAll({
+        'Accept': 'application/json',
+      });
   }
 
   Future<Response<T>> get<T>(

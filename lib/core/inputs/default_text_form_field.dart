@@ -62,6 +62,8 @@ class DefaultTextFormField extends StatelessWidget {
       keyboardType: textInputType,
       obscureText: obscureText,
       onSaved: onSaved,
+      textInputAction: TextInputAction.next,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       cursorColor: AppColors.primaryColor,
       maxLines: maxLines,
       decoration: InputDecoration(
@@ -69,7 +71,6 @@ class DefaultTextFormField extends StatelessWidget {
         hintText: hintTitle,
         labelText: showLabel ? hintTitle : null,
         prefixIcon: prefixIcon,
-        prefixText: prefixText,
       ),
       validator: isValidate
           ? validator != null

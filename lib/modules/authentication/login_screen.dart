@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:four_you_ecommerce/core/constants/app_colors.dart';
 import 'package:four_you_ecommerce/core/di/di.dart';
-import 'package:four_you_ecommerce/core/inputs/email_text_field.dart';
+import 'package:four_you_ecommerce/core/helpers/toasts.dart';
+import 'package:four_you_ecommerce/core/inputs/default_text_form_field.dart';
 import 'package:four_you_ecommerce/core/inputs/password_text_field.dart';
-import 'package:four_you_ecommerce/core/network/dio/dio_helper.dart';
-import 'package:four_you_ecommerce/core/network/repository.dart';
-import 'package:four_you_ecommerce/modules/authentication/cubit/login_cubit.dart';
+import 'package:four_you_ecommerce/core/routing/routes.dart';
+import 'package:four_you_ecommerce/modules/authentication/cubit/auth_cubit.dart';
+import 'package:go_router/go_router.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,14 +21,14 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  final emailNode = FocusNode();
+  final usernameNode = FocusNode();
   final passwordNode = FocusNode();
 
   @override
   void dispose() {
-    emailNode.dispose();
+    usernameNode.dispose();
     passwordNode.dispose();
     super.dispose();
   }
@@ -33,22 +36,33 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => di<LoginCubit>(),
+      create: (context) => di<AuthCubit>(),
       child: Scaffold(
-        body: BlocConsumer<LoginCubit, LoginState>(
+        appBar: AppBar(),
+        body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
-            // TODO: implement listener
+            if (state is LoginLoading) {
+              EasyLoading.show(status: 'Loading...');
+            } else if (state is LoginSuccess) {
+              EasyLoading.dismiss();
+              context.goNamed(Routes.home, extra: AuthCubit.get(context));
+            } else if (state is LoginFailed) {
+              EasyLoading.dismiss();
+              Toasts.showErrorToast(
+                  context, "Failed to Login, please try again");
+            }
           },
           builder: (context, state) {
-            final cubit = LoginCubit.get(context);
-            return SafeArea(
-              child: SizedBox(
-                height: double.infinity,
-                width: double.infinity,
+            final cubit = AuthCubit.get(context);
+            return SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: SingleChildScrollView(
                 child: Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -83,10 +97,26 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(
                               height: 18,
                             ),
-                            EmailTextField(
-                              controller: emailController,
-                              focusNode: emailNode,
-                              hintText: 'Email',
+                            DefaultTextFormField(
+                              hintTitle: 'Username',
+                              controller: usernameController,
+                              focusNode: usernameNode,
+                              onSubmitted: (value) {
+                                setState(() {
+                                  usernameController.text = value;
+                                });
+                              },
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(RegExp(
+                                    r'[a-zA-Z ]')), // Allows letters and spaces
+                              ],
+                              prefixIcon:
+                                  const Icon(Icons.person_add_alt_1_outlined),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'This Field is Required';
+                                }
+                              },
                             ),
                             const SizedBox(
                               height: 16,
@@ -103,7 +133,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      await cubit.login(
+                                          username: usernameController.text,
+                                          password: passwordController.text);
+                                    }
+                                  },
                                   style: const ButtonStyle(),
                                   child: const Text("Sign In"),
                                 )),
@@ -114,7 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                     onPressed: () {
-                                      cubit.addNewUser();
+                                      context.pushNamed(Routes.signup,
+                                          extra: cubit);
                                     },
                                     style: const ButtonStyle(
                                       backgroundColor: WidgetStatePropertyAll(
