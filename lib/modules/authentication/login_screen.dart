@@ -10,6 +10,7 @@ import 'package:four_you_ecommerce/core/inputs/password_text_field.dart';
 import 'package:four_you_ecommerce/core/routing/routes.dart';
 import 'package:four_you_ecommerce/modules/authentication/cubit/auth_cubit.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -40,11 +41,13 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         appBar: AppBar(),
         body: BlocConsumer<AuthCubit, AuthState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is LoginLoading) {
               EasyLoading.show(status: 'Loading...');
             } else if (state is LoginSuccess) {
               EasyLoading.dismiss();
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setString('username', usernameController.text);
               context.goNamed(Routes.home, extra: AuthCubit.get(context));
             } else if (state is LoginFailed) {
               EasyLoading.dismiss();

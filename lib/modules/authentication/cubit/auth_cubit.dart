@@ -36,7 +36,7 @@ class AuthCubit extends Cubit<AuthState> {
       signUpId = f.id;
       emit(SignUpSuccess());
     } on Exception catch (e) {
-      emit(SignUpFailed());
+      emit(SignUpFailed(error: e.toString()));
     }
   }
 
@@ -55,7 +55,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(LoginSuccess());
     } on Exception catch (e) {
       debugPrint("error");
-      emit(LoginFailed());
+      emit(LoginFailed(error: e.toString()));
     }
   }
 }

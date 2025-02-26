@@ -1,7 +1,9 @@
 import 'package:four_you_ecommerce/core/network/dio/dio_helper.dart';
 import 'package:four_you_ecommerce/core/network/repository.dart';
 import 'package:four_you_ecommerce/modules/authentication/cubit/auth_cubit.dart';
+import 'package:four_you_ecommerce/modules/cart/cubit/cart_cubit.dart';
 import 'package:four_you_ecommerce/modules/home/cubit/home_cubit.dart';
+import 'package:four_you_ecommerce/modules/layout/cubit/home_layout_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 
@@ -26,7 +28,14 @@ Future init() async {
       di<Repository>(),
     ),
   );
+  di.registerLazySingleton<HomeLayoutCubit>(
+    () => HomeLayoutCubit(),
+  );
+  di.registerLazySingleton<CartCubit>(
+    () => CartCubit(),
+  );
+
   di.registerLazySingleton<HomeCubit>(
-    () => HomeCubit(),
+    () => HomeCubit(di<Repository>()),
   );
 }

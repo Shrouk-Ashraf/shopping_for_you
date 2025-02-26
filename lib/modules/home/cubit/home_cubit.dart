@@ -1,18 +1,54 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:four_you_ecommerce/core/network/repository.dart';
+import 'package:four_you_ecommerce/modules/home/models/product.dart';
 import 'package:meta/meta.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitial());
+  final Repository _repository;
+  HomeCubit(this._repository) : super(HomeInitial());
   static HomeCubit get(BuildContext context) => BlocProvider.of(context);
 
-  final screens = [
-    Container(color: Colors.green),
-    Container(color: Colors.amber),
-    Container(color: Colors.blue),
-    Container(color: Colors.black),
-  ];
+  List<String> categories = <String>[];
+  List<Product> products = <Product>[];
+  List<Product> searchedProducts = <Product>[];
+  void getCategories() async {
+    emit(LoadingCategories());
+    try {
+      final f = await _repository.getCategories();
+      debugPrint("categories are $f");
+      categories.clear();
+      categories.addAll(f);
+      emit(SuccessCategories());
+    } on Exception catch (e) {
+      emit(FailedCategories());
+    }
+  }
+
+  void getProducts() async {
+    emit(LoadingProducts());
+    try {
+      final f = await _repository.getProducts();
+      products.clear();
+      products.addAll(f);
+      emit(SuccessProducts());
+    } on Exception catch (e) {
+      emit(FailedProducts());
+    }
+  }
+
+  void getProductsByCategory(String category) async {
+    emit(LoadingProducts());
+    try {
+      final f = await _repository.getProductsByCategory(category);
+      products.clear();
+      products.addAll(f);
+      emit(SuccessProducts());
+    } on Exception catch (e) {
+      emit(FailedProducts());
+    }
+  }
 }

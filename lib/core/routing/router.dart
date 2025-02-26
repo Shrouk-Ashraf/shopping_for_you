@@ -4,7 +4,7 @@ import 'package:four_you_ecommerce/core/routing/routes.dart';
 import 'package:four_you_ecommerce/modules/authentication/cubit/auth_cubit.dart';
 import 'package:four_you_ecommerce/modules/authentication/login_screen.dart';
 import 'package:four_you_ecommerce/modules/authentication/signup_screen.dart';
-import 'package:four_you_ecommerce/modules/home/home_screen.dart';
+import 'package:four_you_ecommerce/modules/layout/home_layout.dart';
 import 'package:four_you_ecommerce/modules/onboarding/onboarding_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,7 +13,6 @@ class AppRouter {
   AppRouter(this.isFirstTime);
 
   late final GoRouter router = GoRouter(
-    debugLogDiagnostics: true,
     initialLocation: isFirstTime == true ? '/' : '/login',
     routes: <RouteBase>[
       GoRoute(
@@ -46,7 +45,7 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return BlocProvider.value(
             value: state.extra as AuthCubit,
-            child: const HomeScreen(),
+            child: const HomeLayout(),
           );
         },
       ),
