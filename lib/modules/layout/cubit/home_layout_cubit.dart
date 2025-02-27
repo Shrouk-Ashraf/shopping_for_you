@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:four_you_ecommerce/modules/cart/cart_screen.dart';
 import 'package:four_you_ecommerce/modules/categories/categories_screen.dart';
 import 'package:four_you_ecommerce/modules/home/home_screen.dart';
 import 'package:meta/meta.dart';
@@ -14,7 +15,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
   final screens = [
     HomeScreen(),
     CategoriesScreen(),
-    Container(color: Colors.blue),
+    CartScreen(),
     Container(color: Colors.black),
   ];
 }

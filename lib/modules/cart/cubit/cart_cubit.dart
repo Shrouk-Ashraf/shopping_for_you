@@ -15,16 +15,29 @@ class CartCubit extends Cubit<CartState> {
   List<Product> cartProducts = [];
 
   void getCartData() async {
+    emit(CartLoading());
     await Hive.openBox<Product>('cartBox');
     var cartBox = Hive.box<Product>('cartBox');
     cartProducts = cartBox.values.toList();
     debugPrint("Cart products is $cartProducts");
+    emit(CartLoaded());
   }
 
-  void addToCart(Product product) async {
+  void addToCart(Product product, int quantity) async {
     var cartBox = Hive.box<Product>('cartBox');
     await cartBox.put(product.id, product); // Using product ID as the key
     debugPrint("added");
+
+    if (cartBox.containsKey(product.id)) {
+      // If product already exists, update quantity
+      final existingProduct = cartBox.get(product.id)!;
+      existingProduct.quantity = quantity;
+      existingProduct.save(); // Save changes to Hive
+    } else {
+      // If new, add product with quantity
+      product.quantity = quantity;
+      cartBox.put(product.id, product);
+    }
     getCartData();
     emit(AddedToCart());
   }

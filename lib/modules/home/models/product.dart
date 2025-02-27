@@ -26,7 +26,7 @@ class Product extends HiveObject {
   final Rating rating;
 
   @HiveField(7)
-  int quantity;
+  int quantity; // ✅ Quantity field
 
   Product({
     required this.id,
@@ -36,9 +36,24 @@ class Product extends HiveObject {
     required this.category,
     required this.image,
     required this.rating,
-    this.quantity = 1,
+    this.quantity = 1, // Default to 1
   });
 
+  /// ✅ Increase the quantity and save to Hive
+  void increaseQuantity() {
+    quantity++;
+    save();
+  }
+
+  /// ✅ Decrease the quantity (minimum 1) and save to Hive
+  void decreaseQuantity() {
+    if (quantity > 1) {
+      quantity--;
+      save();
+    }
+  }
+
+  /// ✅ Factory method to create a `Product` from JSON
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
@@ -48,9 +63,11 @@ class Product extends HiveObject {
       category: json['category'],
       image: json['image'],
       rating: Rating.fromJson(json['rating']),
+      quantity: json['quantity'] ?? 1, // Default to 1 if not provided
     );
   }
 
+  /// ✅ Convert the object to a JSON map
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -60,10 +77,11 @@ class Product extends HiveObject {
       'category': category,
       'image': image,
       'rating': rating.toJson(),
-      'quantity': quantity,
+      'quantity': quantity, // ✅ Include quantity
     };
   }
 
+  /// ✅ Create a new instance with updated values
   Product copyWith({int? quantity}) {
     return Product(
       id: id,
@@ -73,14 +91,14 @@ class Product extends HiveObject {
       category: category,
       image: image,
       rating: rating,
-      quantity: quantity ?? this.quantity,
+      quantity:
+          quantity ?? this.quantity, // Keep existing quantity if not updated
     );
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
     return other is Product &&
         other.id == id &&
         other.title == title &&

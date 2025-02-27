@@ -31,7 +31,7 @@ class CustomTextFieldTheme {
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(color: Colors.orange),
+      borderSide: const BorderSide(color: Colors.red),
     ),
   );
 
@@ -62,7 +62,7 @@ class CustomTextFieldTheme {
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(color: Colors.orange),
+      borderSide: const BorderSide(color: Colors.red),
     ),
   );
 }

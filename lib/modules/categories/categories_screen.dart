@@ -21,8 +21,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {},
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         final cubit = HomeCubit.get(context);
         return Container(

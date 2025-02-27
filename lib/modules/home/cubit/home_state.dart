@@ -16,3 +16,9 @@ final class LoadingProducts extends HomeState {}
 final class SuccessProducts extends HomeState {}
 
 final class FailedProducts extends HomeState {}
+
+final class LoadingProductsByCategory extends HomeState {}
+
+final class SuccessProductsByCategory extends HomeState {}
+
+final class FailedProductsByCategory extends HomeState {}

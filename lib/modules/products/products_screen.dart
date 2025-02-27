@@ -25,10 +25,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
         final cartCubit = CartCubit.get(context);
-        return BlocConsumer<HomeCubit, HomeState>(
-          listener: (context, state) {
-            // TODO: implement listener
-          },
+        return BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             final cubit = HomeCubit.get(context);
             return Scaffold(
@@ -50,7 +47,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (state is LoadingProducts)
+                      if (state is LoadingProductsByCategory)
                         const Expanded(
                           child: Center(
                             child: CircularProgressIndicator(
@@ -58,7 +55,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             ),
                           ),
                         ),
-                      if (state is SuccessProducts)
+                      if (state is SuccessProductsByCategory)
                         Expanded(
                           child: GridView.builder(
                             shrinkWrap: true,
@@ -75,16 +72,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                               final product = cubit.products[index];
                               return ProductCard(
                                 product: product,
-                                isAddedToCart:
-                                    cartCubit.cartProducts.contains(product),
-                                onAddedToCart: () {
-                                  if (cartCubit.cartProducts
-                                      .contains(product)) {
-                                    cartCubit.removeFromCart(product);
-                                  } else {
-                                    cartCubit.addToCart(product);
-                                  }
-                                },
                               );
                             },
                           ),

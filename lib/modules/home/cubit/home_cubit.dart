@@ -17,6 +17,8 @@ class HomeCubit extends Cubit<HomeState> {
   List<Product> searchedProducts = <Product>[];
   void getCategories() async {
     emit(LoadingCategories());
+    await Future.delayed(
+        Duration(milliseconds: 300)); //to show the loading indicator
     try {
       final f = await _repository.getCategories();
       debugPrint("categories are $f");
@@ -30,6 +32,8 @@ class HomeCubit extends Cubit<HomeState> {
 
   void getProducts() async {
     emit(LoadingProducts());
+    await Future.delayed(
+        Duration(milliseconds: 300)); //to show the loading indicator
     try {
       final f = await _repository.getProducts();
       products.clear();
@@ -41,14 +45,14 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void getProductsByCategory(String category) async {
-    emit(LoadingProducts());
+    emit(LoadingProductsByCategory());
     try {
       final f = await _repository.getProductsByCategory(category);
       products.clear();
       products.addAll(f);
-      emit(SuccessProducts());
+      emit(SuccessProductsByCategory());
     } on Exception catch (e) {
-      emit(FailedProducts());
+      emit(FailedProductsByCategory());
     }
   }
 }
