@@ -5,7 +5,6 @@ import 'package:four_you_ecommerce/modules/cart/cubit/cart_cubit.dart';
 import 'package:four_you_ecommerce/modules/home/cubit/home_cubit.dart';
 import 'package:four_you_ecommerce/modules/layout/cubit/home_layout_cubit.dart';
 import 'package:get_it/get_it.dart';
-import 'package:dio/dio.dart';
 
 GetIt di = GetIt.I;
 

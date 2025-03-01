@@ -1,24 +1,34 @@
-import 'package:flutter/material.dart';
 
-void showSuccessDialog(BuildContext context, String message) {
+import 'package:flutter/material.dart';
+import 'package:four_you_ecommerce/modules/layout/cubit/home_layout_cubit.dart';
+
+import '../constants/app_colors.dart';
+
+Future<void> showSuccessDialog(BuildContext context, String message,VoidCallback onOkPressed)async {
   showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        title: Column(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+
+            borderRadius: BorderRadius.circular(12)),
+        title:  Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.check_circle, color: Colors.green, size: 60),
-            SizedBox(height: 10),
-            Text("Success", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Icon(Icons.check_circle, color: AppColors.primaryColor, size: 60),
+            const SizedBox(height: 10),
+            Text(message, textAlign: TextAlign.center,style: const TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
-        content: Text(message, textAlign: TextAlign.center),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text("OK", style: TextStyle(color: Colors.green)),
+            onPressed: ()  {
+        Navigator.pop(context);
+              HomeLayoutCubit.get(context).changeIndex(0);
+
+              onOkPressed.call();},
+            child: const Text("OK", style: TextStyle(color: AppColors.primaryColor,fontSize: 18)),
           ),
         ],
       );

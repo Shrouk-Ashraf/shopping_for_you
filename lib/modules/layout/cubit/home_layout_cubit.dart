@@ -11,11 +11,17 @@ part 'home_layout_state.dart';
 class HomeLayoutCubit extends Cubit<HomeLayoutState> {
   HomeLayoutCubit() : super(HomeInitial());
   static HomeLayoutCubit get(BuildContext context) => BlocProvider.of(context);
-
+int currentIndex=0;
   final screens = [
-    HomeScreen(),
-    CategoriesScreen(),
-    CartScreen(),
-    Container(color: Colors.black),
-  ];
+    const HomeScreen(),
+    const CategoriesScreen(),
+    const CartScreen(),];
+
+
+
+  changeIndex(int index){
+    currentIndex=index;
+    emit(ChangeState());
+  }
 }
+

@@ -14,29 +14,21 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => di<HomeLayoutCubit>(),
-        ),
+    return
         BlocProvider(
           create: (context) => di<HomeCubit>(),
-        ),
-      ],
+
       child: BlocBuilder<HomeLayoutCubit, HomeLayoutState>(
         builder: (context, state) {
           final cubit = HomeLayoutCubit.get(context);
           return Scaffold(
             bottomNavigationBar: NavigationBar(
               // elevation: 0,
-              selectedIndex: selectedIndex,
+              selectedIndex: cubit.currentIndex,
               onDestinationSelected: (index) {
-                setState(() {
-                  selectedIndex = index;
-                });
+                cubit.changeIndex(index);
               },
               backgroundColor: AppColors.darkerGrey,
               indicatorColor: AppColors.primaryColor.withOpacity(0.3),
@@ -71,19 +63,10 @@ class _HomeLayoutState extends State<HomeLayout> {
                       color: AppColors.primaryColor,
                     ),
                     label: "Cart"),
-                NavigationDestination(
-                    icon: Icon(
-                      Icons.person,
-                      color: Colors.grey,
-                    ),
-                    selectedIcon: Icon(
-                      Icons.person,
-                      color: AppColors.primaryColor,
-                    ),
-                    label: "Profile"),
+
               ],
             ),
-            body: cubit.screens[selectedIndex],
+            body: cubit.screens[cubit.currentIndex],
           );
         },
       ),

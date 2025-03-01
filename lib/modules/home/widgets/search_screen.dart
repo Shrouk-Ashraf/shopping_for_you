@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:four_you_ecommerce/core/constants/app_colors.dart';
 import 'package:four_you_ecommerce/core/inputs/search_text_field.dart';
 import 'package:four_you_ecommerce/main.dart';
-import 'package:four_you_ecommerce/modules/cart/cubit/cart_cubit.dart';
 import 'package:four_you_ecommerce/modules/home/cubit/home_cubit.dart';
 import 'package:four_you_ecommerce/modules/home/widgets/product_card.dart';
 
@@ -51,8 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
               SearchTextField(
                 controller: searchController,
                 onChanged: (value) {
-                  debugPrint("onchanged");
-                  if (value == null || value.isEmpty) {
+                  if (value.isEmpty) {
                     setState(() {
                       isSearch = false;
                     });

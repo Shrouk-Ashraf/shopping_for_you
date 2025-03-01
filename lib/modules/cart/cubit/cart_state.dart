@@ -12,3 +12,4 @@ final class CartLoaded extends CartState {}
 final class RemovedFromCart extends CartState {}
 
 final class AddedToCart extends CartState {}
+final class CheckoutSuccess extends CartState {}

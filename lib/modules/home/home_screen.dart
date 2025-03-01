@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:four_you_ecommerce/core/constants/app_colors.dart';
-import 'package:four_you_ecommerce/core/helpers/toasts.dart';
-import 'package:four_you_ecommerce/core/inputs/search_text_field.dart';
-import 'package:four_you_ecommerce/main.dart';
-import 'package:four_you_ecommerce/modules/cart/cubit/cart_cubit.dart';
 import 'package:four_you_ecommerce/modules/home/cubit/home_cubit.dart';
-import 'package:four_you_ecommerce/modules/home/models/product.dart';
 import 'package:four_you_ecommerce/modules/home/widgets/home_main_screen.dart';
-import 'package:four_you_ecommerce/modules/home/widgets/product_card.dart';
 import 'package:four_you_ecommerce/modules/home/widgets/search_screen.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/adapters.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

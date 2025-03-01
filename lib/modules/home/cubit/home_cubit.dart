@@ -18,7 +18,7 @@ class HomeCubit extends Cubit<HomeState> {
   void getCategories() async {
     emit(LoadingCategories());
     await Future.delayed(
-        Duration(milliseconds: 300)); //to show the loading indicator
+        const Duration(milliseconds: 500)); //to show the loading indicator
     try {
       final f = await _repository.getCategories();
       debugPrint("categories are $f");
@@ -33,7 +33,7 @@ class HomeCubit extends Cubit<HomeState> {
   void getProducts() async {
     emit(LoadingProducts());
     await Future.delayed(
-        Duration(milliseconds: 300)); //to show the loading indicator
+        const Duration(milliseconds: 300)); //to show the loading indicator
     try {
       final f = await _repository.getProducts();
       products.clear();

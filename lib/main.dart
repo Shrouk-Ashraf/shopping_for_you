@@ -12,6 +12,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'modules/layout/cubit/home_layout_cubit.dart';
+
 SharedPreferences? prefs;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,8 +47,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => di<CartCubit>()..getCartData(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => di<CartCubit>()..getCartData(),),
+        BlocProvider(
+          create: (context) => di<HomeLayoutCubit>(),
+        ),
+      ],
+
       child: ScreenUtilInit(
           designSize: const Size(360, 690),
           minTextAdapt: true,

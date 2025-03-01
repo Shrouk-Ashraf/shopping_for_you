@@ -17,7 +17,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeCubit>()..getProductsByCategory(widget.category);
+    context.read<HomeCubit>().getProductsByCategory(widget.category);
   }
 
   @override
@@ -31,7 +31,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: Text(
+                title: const Text(
                   "Products",
                   style: TextStyle(
                       color: AppColors.textPrimaryColor,
@@ -44,39 +44,44 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 height: double.infinity,
                 color: AppColors.lightGrey,
                 child: SafeArea(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (state is LoadingProductsByCategory)
-                        const Expanded(
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.primaryColor,
+                  child: RefreshIndicator(
+                    onRefresh: ()async{
+                      cubit.getProductsByCategory(widget.category);
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (state is LoadingProductsByCategory)
+                          const Expanded(
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.primaryColor,
+                              ),
                             ),
                           ),
-                        ),
-                      if (state is SuccessProductsByCategory)
-                        Expanded(
-                          child: GridView.builder(
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.all(8.0),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 8,
-                              mainAxisSpacing: 8,
-                              childAspectRatio: 0.6,
+                        if (state is SuccessProductsByCategory)
+                          Expanded(
+                            child: GridView.builder(
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.all(8.0),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 8,
+                                childAspectRatio: 0.6,
+                              ),
+                              itemCount: cubit.products.length,
+                              itemBuilder: (context, index) {
+                                final product = cubit.products[index];
+                                return ProductCard(
+                                  product: product,
+                                );
+                              },
                             ),
-                            itemCount: cubit.products.length,
-                            itemBuilder: (context, index) {
-                              final product = cubit.products[index];
-                              return ProductCard(
-                                product: product,
-                              );
-                            },
-                          ),
-                        )
-                    ],
+                          )
+                      ],
+                    ),
                   ),
                 ),
               ),

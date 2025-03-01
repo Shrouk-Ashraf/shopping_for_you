@@ -155,52 +155,51 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                 ),
               ),
-              bottomNavigationBar: Container(
-                color: Colors.white12,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        _quantityButton(Icons.remove, decrement),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Text(
-                            '$quantity',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
+              bottomNavigationBar:Container(
+                  color: Colors.white12,
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          _quantityButton(Icons.remove, decrement),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              '$quantity',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
                           ),
-                        ),
-                        _quantityButton(Icons.add, increment),
-                      ],
-                    ),
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                          _quantityButton(Icons.add, increment),
+                        ],
                       ),
-                      onPressed: () {
-                        setState(() {
-                          debugPrint(
-                              "is in cart ${cubit.cartProducts.contains(widget.product)}");
-                          cubit.addToCart(widget.product, quantity);
-                        });
-                      },
-                      icon: const Icon(Icons.shopping_bag_outlined),
-                      label: const Text("Add to Cart"),
-                    ),
-                  ],
-                ),
-              ),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primaryColor,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            debugPrint(
+                                "is in cart ${cubit.cartProducts.contains(widget.product)}");
+                            cubit.addToCart(widget.product, quantity);
+                          });
+                        },
+                        icon: const Icon(Icons.shopping_bag_outlined,color: Colors.white,),
+                        label: const Text("Add to Cart"),
+                      ),
+                    ],
+                  )),
             );
           },
         );
