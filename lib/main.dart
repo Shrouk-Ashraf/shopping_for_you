@@ -10,13 +10,23 @@ import 'package:four_you_ecommerce/modules/cart/cubit/cart_cubit.dart';
 import 'package:four_you_ecommerce/modules/home/models/product.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'modules/layout/cubit/home_layout_cubit.dart';
 
+Future<void> requestPermissions() async {
+  var status = await Permission.storage.request();
+  if (status.isGranted) {
+    print("Storage permission granted");
+  } else {
+    print("Storage permission denied");
+  }
+}
 SharedPreferences? prefs;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  requestPermissions();
   prefs = await SharedPreferences.getInstance();
   bool isFirstTime = prefs!.getBool('isFirstTime') ?? true;
   EasyLoading.instance
@@ -67,7 +77,6 @@ class MyApp extends StatelessWidget {
               builder: EasyLoading.init(),
               themeMode: ThemeMode.light,
               theme: lightTheme,
-              darkTheme: darkTheme,
               backButtonDispatcher: RootBackButtonDispatcher(),
               routeInformationParser: appRouter.router.routeInformationParser,
               routeInformationProvider:

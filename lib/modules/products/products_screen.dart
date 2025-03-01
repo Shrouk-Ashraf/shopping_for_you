@@ -69,7 +69,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 8,
                                 mainAxisSpacing: 8,
-                                childAspectRatio: 0.6,
+                                childAspectRatio: 0.55,
                               ),
                               itemCount: cubit.products.length,
                               itemBuilder: (context, index) {

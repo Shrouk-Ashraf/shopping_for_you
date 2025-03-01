@@ -109,10 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   usernameController.text = value;
                                 });
                               },
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp(
-                                    r'[a-zA-Z ]')), // Allows letters and spaces
-                              ],
+
                               prefixIcon:
                                   const Icon(Icons.person_add_alt_1_outlined),
                               validator: (value) {

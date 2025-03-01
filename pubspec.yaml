@@ -26,6 +26,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   introduction_screen: ^3.1.17
+  permission_handler: ^11.4.0
   pretty_dio_logger: ^1.4.0
   shared_preferences: ^2.5.2
   svg_flutter: ^0.0.1

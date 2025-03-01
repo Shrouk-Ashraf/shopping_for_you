@@ -6,6 +6,8 @@ import 'package:four_you_ecommerce/main.dart';
 import 'package:four_you_ecommerce/modules/home/cubit/home_cubit.dart';
 import 'package:four_you_ecommerce/modules/home/widgets/product_card.dart';
 
+import '../../products/products_screen.dart';
+
 class HomeMainScreen extends StatefulWidget {
   const HomeMainScreen({super.key, required this.isSearch, required this.onSearch});
 
@@ -87,18 +89,33 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                     child: ListView.separated(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => Column(
-                        children: [
-                          const CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: Icon(Icons.category, color: AppColors.primaryColor),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            cubit.categories[index],
-                            style: const TextStyle(color: Colors.white),
-                          )
-                        ],
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      BlocProvider.value(
+                                        value: cubit,
+                                        child: ProductsScreen(
+                                            category: cubit.categories[index]),
+                                      ))).then((val) {
+                            cubit.getCategories();
+                          });
+                        },
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: Icon(Icons.category, color: AppColors.primaryColor),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              cubit.categories[index],
+                              style: const TextStyle(color: Colors.white),
+                            )
+                          ],
+                        ),
                       ),
                       separatorBuilder: (context, index) => const SizedBox(width: 16),
                       itemCount: cubit.categories.length,
@@ -148,7 +165,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                             crossAxisCount: 2,
                             crossAxisSpacing: 8,
                             mainAxisSpacing: 8,
-                            childAspectRatio: 0.6,
+                            childAspectRatio: 0.55,
                           ),
                           itemCount: cubit.products.length,
                           itemBuilder: (context, index) {

@@ -79,7 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
-                    childAspectRatio: 0.6,
+                    childAspectRatio: 0.55,
                   ),
                   itemCount: widget.cubit.searchedProducts.length,
                   itemBuilder: (context, index) {
