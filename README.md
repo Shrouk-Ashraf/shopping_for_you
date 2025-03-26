@@ -9,7 +9,7 @@ This Application uses the following:
 - Has Search widget to show result whenever the user add or remove a character in the search field. 📌
 
 ## Shopping for you screenshots
-![1](https://github.com/user-attachments/assets/e25c77b7-30e5-4cfc-9acb-db5f93c672bb)
+![WhatsApp Image 2025-03-26 at 3 33 56 AM](https://github.com/user-attachments/assets/1dabb7d8-b18b-44e8-9517-5edec705754e)
 ![2](https://github.com/user-attachments/assets/61cee151-c9b3-4cc7-bce9-e815cce901c9)
 ![3](https://github.com/user-attachments/assets/5d513371-2b82-4150-a056-19b4c0a3ba73)
 ![4](https://github.com/user-attachments/assets/5c4d54fc-1b42-4db7-b793-84eb2350d052)
