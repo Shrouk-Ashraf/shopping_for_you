@@ -7,7 +7,7 @@ This Application uses the following:
 - Http: to get the data form the FakeStore API. ✔
 - Hive: to save the cart data in local storage. 💯
 - Has Search widget to show result whenever the user add or remove a character in the search field. 📌
-- 
+
 ## Shopping for you screenshots
 ![1](https://github.com/user-attachments/assets/e25c77b7-30e5-4cfc-9acb-db5f93c672bb)
 ![2](https://github.com/user-attachments/assets/61cee151-c9b3-4cc7-bce9-e815cce901c9)
