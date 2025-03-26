@@ -1,4 +1,4 @@
-# shopping_for_you
+# Shopping for you (4U)
 
 An Ecommerce application.
 
